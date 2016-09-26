@@ -9,7 +9,7 @@ uint32_t vita2d_texture_get_pixel(const vita2d_texture* texture, int x, int y ){
 char options[][12] = {"Start Game", "How To Play","Settings", "About", "Exit"};
 char pOptions[][24] = {"Return to game", "Save Progress", "Exit to title"};
 char keybOptions[][24] = {"Exit and Save", "Exit and Don't save","Reset to default"};
-char setOptions[][24] = {"Rebind Buttons", "Texture packs", "Debug Text:   ", "N3DS Speedup:   ", "Return to title"};
+char setOptions[][24] = {"Rebind Buttons", "Texture packs", "Debug Text:   ", "444 Mhz Mode:   ", "Return to title"};
 
 // Rebind buttons menu (Settings)
 int keys[] = {
@@ -587,12 +587,10 @@ void tickMenu(int menu){
         case MENU_SETTINGS:
 		    if (k_up.clicked){ 
                 --currentSelection; 
-                if(currentSelection == 3 && !((MODEL_3DS & 6) != 0)) --currentSelection; 
                 if(currentSelection < 0)currentSelection=4;
             }
 		    if (k_down.clicked){ 
                 ++currentSelection; 
-                if(currentSelection == 3 && !((MODEL_3DS & 6) != 0)) ++currentSelection; 
                 if(currentSelection > 4)currentSelection=0;
             }
             if(k_decline.clicked){
@@ -634,7 +632,7 @@ void tickMenu(int menu){
                         break;
                     case 4:
                         if(true){
-                            FILE * fset = fopen("settings.bin","wb");
+                            FILE * fset = fopen("ux0:/data/Minicraft/settings.bin","wb");
                             fwrite(&shouldRenderDebug,sizeof(bool),1,fset);
                             fwrite(&shouldSpeedup,sizeof(bool),1,fset);
                             fclose(fset);
@@ -1123,47 +1121,44 @@ void renderMenu(int menu,int xscr,int yscr){
         break;
         case MENU_SETTINGS:
 		    vita2d_start_drawing();
-		        drawText("Settings",(400-(8*12))/2,30);
+			vita2d_clear_screen();
+		        drawSizedText("Settings",(540-(8*48))/2,30,4.0);
 		        for(i = 4; i >= 0; --i){
                     char* msg = setOptions[i];
                     uint32_t color = 0xFF7F7F7F;
                     if(i == currentSelection) color = 0xFFFFFFFF;
                     if(i == 2){
-                        if(shouldRenderDebug) drawSizedTextColor("On",142, ((8 + i) * 32 - 190) >> 1,2.0, 0xFF00DF00);    
-                        else  drawSizedTextColor("Off",142, ((8 + i) * 32 - 190) >> 1,2.0, 0xFF0000DF);   
+                        if(shouldRenderDebug) drawSizedTextColor("On",152, ((8 + i) * 20 - 50) >> 1,4.0, 0xFF00DF00);    
+                        else  drawSizedTextColor("Off",152, ((8 + i) * 20 - 50) >> 1,4.0, 0xFF0000DF);   
                     } else if(i == 3){
                         
-                        if((MODEL_3DS & 6) != 0){ // detect if user is using a New 3DS
-                            if(shouldSpeedup) drawSizedTextColor("On",142, ((8 + i) * 32 - 190) >> 1,2.0, 0xFF00DF00);    
-                            else  drawSizedTextColor("Off",142, ((8 + i) * 32 - 190) >> 1,2.0, 0xFF0000DF); 
-                        } else {
-                            color = 0xFF3F3F3F;
-                            drawSizedTextColor("Off",142, ((8 + i) * 32 - 190) >> 1,2.0, 0xFF3F3F3F); 
-                        }
+                        if(shouldSpeedup) drawSizedTextColor("On",162, ((8 + i) * 20 - 50) >> 1,4.0, 0xFF00DF00);    
+                        else  drawSizedTextColor("Off",162, ((8 + i) * 20 - 50) >> 1,4.0, 0xFF0000DF); 
+
                     }
-                    drawSizedTextColor(msg,(200 - (strlen(msg) * 8))/2, ((8 + i) * 32 - 190) >> 1,2.0, color);    
+                    drawSizedTextColor(msg,(240 - (strlen(msg) * 8))/2, ((8 + i) * 20 - 50) >> 1,4.0, color);    
                 }
 		        switch(currentSelection){
                     case 0:
-                        drawTextColor("Change the controls",(320 - (19 * 12))/2,24,0xFF7FFFFF);
+                        drawSizedTextColor("Change the controls",24,4,2.0,0xFF7FFFFF);
                         break;
                     case 1:
-                        drawTextColor("Change the game's art",(320 - (21 * 12))/2,24,0xFF7FFFFF);
+                        drawSizedTextColor("Change the game's art",24,4,2.0,0xFF7FFFFF);
                         break;
                     case 2:
-                        drawTextColor("Show FPS/Pos/Entities",(320 - (22 * 12))/2,24,0xFF7FFFFF);
+                        drawSizedTextColor("Show Pos/Entities",24,4,2.0,0xFF7FFFFF);
                         break;
                     case 3:
-                        drawTextColor("Use the N3DS 804mhz mode",(320 - (24 * 12))/2,24,0xFF7FFFFF);
+                        drawSizedTextColor("Enables 444 Mhz mode",24,4,2.0,0xFF7FFFFF);
                         break;
                     case 4:
-                        drawTextColor("Back to the titlescreen",(320 - (23 * 12))/2,24,0xFF7FFFFF);
+                        drawSizedTextColor("Back to the titlescreen",24,4,2.0,0xFF7FFFFF);
                         break;
                 }
-                drawText("Press   to select", 58, 100);
-                renderButtonIcon(k_accept.input & -k_accept.input, 128, 98, 1);
-                drawText("Press   to return", 58, 150);
-                renderButtonIcon(k_decline.input & -k_decline.input, 128, 148, 1);
+                drawSizedText("Press    to select", 144, 100, 2.0);
+                renderButtonIcon(k_accept.input & -k_accept.input, 374, 82, 1);
+                drawSizedText("Press    to return", 144, 150, 2.0);
+                renderButtonIcon(k_decline.input & -k_decline.input, 374, 132, 1);
 		    vita2d_end_drawing();
         break;
         case MENU_TITLE:
@@ -1181,7 +1176,6 @@ void renderMenu(int menu,int xscr,int yscr){
                 
 		        drawSizedText(versionText,2,510,2.5);
 		    
-            /* Bottom Screen */
 		      int startX = 0, startY = 0;// relative coordinates ftw
 			  startX = 60;startY = 50;
               render16(startX,startY+12,0,128,0);//Player(Carrying)
@@ -1226,7 +1220,7 @@ void renderMenu(int menu,int xscr,int yscr){
                         drawSizedTextColor("Who made this game?",24,4,2.0,0xFF7FFFFF);
                         break;
                     case 4: // "Exit"
-                        drawSizedTextColor("Exit to the homebrew menu",24,4,2.0,0xFF7FFFFF);
+                        drawSizedTextColor("Exit to the PSVITA dashboard",24,4,2.0,0xFF7FFFFF);
                         break;
                 }
 		    vita2d_end_drawing();
