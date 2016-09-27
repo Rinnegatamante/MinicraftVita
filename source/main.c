@@ -161,6 +161,7 @@ int main() {
 		fclose(file);
 	}
     
+	sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
 	vita2d_init();
 	//csndInit();
 	noItem = newItem(ITEM_NULL, 0);
