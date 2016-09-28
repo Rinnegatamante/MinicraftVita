@@ -35,7 +35,7 @@ void renderb(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bit
 		yp += 8;
 	}
 	vita2d_draw_texture_tint_part_scale(icons, xp << 1, yp << 1, xTile, yTile, 8,
-			8, scaleX + 2.0, scaleY + 2.0, color);
+			8, scaleX, scaleY, color);
 }
 void renderr(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bits, float rotate) {
 	xp -= offsetX;
@@ -66,7 +66,7 @@ void renderc(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, int sizeX, 
 		yp += sizeY;
 	}
 	vita2d_draw_texture_part_scale(icons, xp << 1, yp << 1, xTile, yTile, sizeX,
-			sizeY, scaleX + 2.0, scaleY + 2.0);
+			sizeY, scaleX, scaleY);
 }
 void renderbc(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, int sizeX, int sizeY,
 		uint8_t bits, uint32_t color) {
@@ -82,7 +82,7 @@ void renderbc(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, int sizeX,
 		yp += sizeY;
 	}
 	vita2d_draw_texture_tint_part_scale(icons, xp << 1, yp << 1, xTile, yTile,
-			sizeX, sizeY, scaleX + 2.0, scaleY + 2.0, color);
+			sizeX, sizeY, scaleX, scaleY, color);
 }
 void render16(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bits) {
 	xp -= offsetX;
@@ -97,10 +97,26 @@ void render16(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bi
 		yp += 16;
 	}
 	vita2d_draw_texture_part_scale(icons, xp << 1, yp << 1, xTile, yTile, 16, 16,
-			scaleX + 2.0, scaleY + 2.0);
+			scaleX, scaleY );
 }
 
 void render16c(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bits, float scaleX,float scaleY) {
+	xp -= offsetX;
+	yp -= offsetY;
+	xp *= scaleX;
+	yp *= scaleY;
+	if ((bits & 1) > 0) {
+		xp += 16 * scaleX;
+		scaleX = -scaleX;
+	}
+	if ((bits & 2) > 0) {
+		yp += 16 * scaleY;
+		scaleY = -scaleY;
+	}
+	vita2d_draw_texture_part_scale(icons, xp, yp, xTile, yTile,16, 16, scaleX, scaleY);
+}
+
+void render16cx2(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bits, float scaleX,float scaleY) {
 	xp -= offsetX;
 	yp -= offsetY;
 	xp *= scaleX;
@@ -129,7 +145,7 @@ void render16b(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t b
 		yp += 16;
 	}
 	vita2d_draw_texture_tint_part_scale(icons, xp << 1, yp << 1, xTile, yTile,
-			16, 16, scaleX + 2.0, scaleY + 2.0, color);
+			16, 16, scaleX, scaleY, color);
 }
 void render16s(int32_t xp, int32_t yp, uint32_t tile, uint8_t bits, uint32_t color) {
 	xp -= offsetX;
@@ -146,7 +162,7 @@ void render16s(int32_t xp, int32_t yp, uint32_t tile, uint8_t bits, uint32_t col
 		yp += 16;
 	}
 	vita2d_draw_texture_tint_part_scale(icons, xp << 1, yp << 1, xTile, yTile,
-			16, 16, scaleX + 2.0, scaleY + 2.0, color);
+			16, 16, scaleX, scaleY, color);
 }
 
 void renderTitle(int x, int y) {
@@ -158,83 +174,83 @@ void renderTitle(int x, int y) {
 void renderButtonIcon(uint32_t keyIcon, int x, int y, float scale) {
 	switch (keyIcon) {
 	/*case CIRCLEPAD:
-		render16c(x, y, 96, 208, 0, scale, scale);
+		render16cx2(x, y, 96, 208, 0, scale, scale);
 		break;
 	case KEY_CPAD_UP:
-		render16c(x, y, 112, 208, 0, scale, scale);
+		render16cx2(x, y, 112, 208, 0, scale, scale);
 		break;
 	case KEY_CPAD_LEFT:
-		render16c(x, y, 128, 208, 0, scale, scale);
+		render16cx2(x, y, 128, 208, 0, scale, scale);
 		break;
 	case KEY_CPAD_DOWN:
-		render16c(x, y, 144, 208, 0, scale, scale);
+		render16cx2(x, y, 144, 208, 0, scale, scale);
 		break;
 	case KEY_CPAD_RIGHT:
-		render16c(x, y, 160, 208, 0, scale, scale);
+		render16cx2(x, y, 160, 208, 0, scale, scale);
 		break;*/
 
 		/* New 3DS only */
 	/*case CSTICK:
-		render16c(x, y, 176, 208, 0, scale, scale);
+		render16cx2(x, y, 176, 208, 0, scale, scale);
 		break;
 	case KEY_CSTICK_UP:
-		render16c(x, y, 192, 208, 0, scale, scale);
+		render16cx2(x, y, 192, 208, 0, scale, scale);
 		break;
 	case KEY_CSTICK_LEFT:
-		render16c(x, y, 208, 208, 0, scale, scale);
+		render16cx2(x, y, 208, 208, 0, scale, scale);
 		break;
 	case KEY_CSTICK_DOWN:
-		render16c(x, y, 224, 208, 0, scale, scale);
+		render16cx2(x, y, 224, 208, 0, scale, scale);
 		break;
 	case KEY_CSTICK_RIGHT:
-		render16c(x, y, 240, 208, 0, scale, scale);
+		render16cx2(x, y, 240, 208, 0, scale, scale);
 		break;*/
 
 	case SCE_CTRL_CROSS:
-		render16c(x, y, 0, 224, 0, scale, scale);
+		render16cx2(x, y, 0, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_CIRCLE:
-		render16c(x, y, 16, 224, 0, scale, scale);
+		render16cx2(x, y, 16, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_TRIANGLE:
-		render16c(x, y, 32, 224, 0, scale, scale);
+		render16cx2(x, y, 32, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_SQUARE:
-		render16c(x, y, 48, 224, 0, scale, scale);
+		render16cx2(x, y, 48, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_UP:
-		render16c(x, y, 64, 224, 0, scale, scale);
+		render16cx2(x, y, 64, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_LEFT:
-		render16c(x, y, 80, 224, 0, scale, scale);
+		render16cx2(x, y, 80, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_DOWN:
-		render16c(x, y, 96, 224, 0, scale, scale);
+		render16cx2(x, y, 96, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_RIGHT:
-		render16c(x, y, 112, 224, 0, scale, scale);
+		render16cx2(x, y, 112, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_START:
-		render16c(x - 8, y, 128, 224, 0, scale, scale);
-		render16c(x + 8, y, 144, 224, 0, scale, scale);
+		render16cx2(x - 8, y, 128, 224, 0, scale , scale );
+		render16cx2(x + 8, y, 144, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_SELECT:
-		render16c(x - 8, y, 160, 224, 0, scale, scale);
-		render16c(x + 8, y, 176, 224, 0, scale, scale);
+		render16cx2(x - 8, y, 160, 224, 0, scale , scale );
+		render16cx2(x + 8, y, 176, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_LTRIGGER:
-		render16c(x, y, 192, 224, 0, scale, scale);
+		render16cx2(x, y, 192, 224, 0, scale , scale );
 		break;
 	case SCE_CTRL_RTRIGGER:
-		render16c(x, y, 208, 224, 0, scale, scale);
+		render16cx2(x, y, 208, 224, 0, scale , scale );
 		break;
 
 		/* New 3DS only */
 	/*case KEY_ZL:
-		render16c(x, y, 224, 224, 0, scale, scale);
+		render16cx2(x, y, 224, 224, 0, scale, scale);
 		break;
 	case KEY_ZR:
-		render16c(x, y, 240, 224, 0, scale, scale);
+		render16cx2(x, y, 240, 224, 0, scale, scale);
 		break;*/
 	}
 }
@@ -786,17 +802,17 @@ void renderPlayer() {
 }
 
 void renderMenuBackground(int xScroll, int yScroll) {
-	vita2d_draw_rectangle(0, 0, 400, 240, RGBA8(12, 12, 12, 255)); //You might think "real" black would be better, but it actually looks better that way
+	vita2d_draw_rectangle(0, 0, 960, 544, RGBA8(12, 12, 12, 255)); //You might think "real" black would be better, but it actually looks better that way
 	renderLightsToStencil();
 	renderBackground(xScroll, yScroll);
 	resetStencilStuff();
 }
 
 void renderBackground(int xScroll, int yScroll) {
-    if(currentLevel > 0) vita2d_draw_rectangle(0, 0, 400, 240, dirtColor[currentLevel]); // dirt color
+    if(currentLevel > 0) vita2d_draw_rectangle(0, 0, 960, 544, dirtColor[currentLevel]); // dirt color
 	else {
 		vita2d_draw_texture_part_scale(minimap[1], (-xScroll / 3) - 256, (-yScroll / 3) - 32, 0, 0, 128, 128, 12.5, 7.5);
-		vita2d_draw_rectangle(0, 0, 400, 240, 0xAFDFDFDF);
+		vita2d_draw_rectangle(0, 0, 960, 544, 0xAFDFDFDF);
 	}
 	int xo = xScroll >> 4;
 	int yo = yScroll >> 4;

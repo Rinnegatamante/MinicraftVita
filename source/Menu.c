@@ -75,14 +75,14 @@ void readTPFiles(){
     tpFileCount = 1; // 0 = default.
     SceUID d;
     SceIoDirent dir;
-    d = sceIoDopen("./texturepacks/");
+    d = sceIoDopen("ux0:/data/Minicraft/texturepacks/");
     if (d >= 0){
 	    while (sceIoDread(d, &dir) > 0) {
             if (strstr(dir.d_name, ".zip") != NULL) { // Check if filename contains ".zip"
                 strncpy(tpFileNames[tpFileCount], dir.d_name, strlen(dir.d_name)-4);
                 
                 char fullDirName[256];
-                sprintf(fullDirName,"./texturepacks/%s",dir.d_name);
+                sprintf(fullDirName,"ux0:/data/Minicraft/texturepacks/%s",dir.d_name);
                 //int err = 
                 getTexturePackComment(fullDirName, tpFileComment[tpFileCount]);
                 /*
@@ -131,85 +131,85 @@ void addToFileName(char * c){
 void doTouchButton(){
     int xVal = k_touch.x, yVal = k_touch.y;
     int strLength = strlen(fileNames[worldFileCount]);
-    if(yVal >= 60 && yVal < 80){ // 0 to 9
-        if(xVal >= 4 && xVal < 4+16){ touchX = 4; if(strLength < 24)addToFileName("1");}
-        else if(xVal >= 36 && xVal < 4+32+16){ touchX = 36; if(strLength < 24)addToFileName("2");}
-        else if(xVal >= 68 && xVal < 4+64+16){ touchX = 68; if(strLength < 24)addToFileName("3");}
-        else if(xVal >= 100 && xVal < 4+96+16){ touchX = 100; if(strLength < 24)addToFileName("4");}
-        else if(xVal >= 132 && xVal < 4+128+16){ touchX = 132; if(strLength < 24)addToFileName("5");}
-        else if(xVal >= 164 && xVal < 4+160+16){ touchX = 164; if(strLength < 24)addToFileName("6");}
-        else if(xVal >= 196 && xVal < 4+192+16){ touchX = 196; if(strLength < 24)addToFileName("7");}
-        else if(xVal >= 228 && xVal < 4+224+16){ touchX = 228; if(strLength < 24)addToFileName("8");}
-        else if(xVal >= 260 && xVal < 4+256+16){ touchX = 260; if(strLength < 24)addToFileName("9");}
-        else if(xVal >= 292 && xVal < 4+288+16){ touchX = 292; if(strLength < 24)addToFileName("0");}
+    if(yVal >= 100 && yVal < 140){ // 0 to 9
+        if(xVal >= 140 && xVal < 140+48){ touchX = 140; if(strLength < 24)addToFileName("1");}
+        else if(xVal >= 140+48 && xVal < 140+48*2){ touchX = 140+48; if(strLength < 24)addToFileName("2");}
+        else if(xVal >= 140+48*2 && xVal < 140+48*3){ touchX = 140+48*2; if(strLength < 24)addToFileName("3");}
+        else if(xVal >= 140+48*3 && xVal < 140+48*4){ touchX = 140+48*3; if(strLength < 24)addToFileName("4");}
+        else if(xVal >= 140+48*4 && xVal < 140+48*5){ touchX = 140+48*4; if(strLength < 24)addToFileName("5");}
+        else if(xVal >= 140+48*5 && xVal < 140+48*6){ touchX = 140+48*5; if(strLength < 24)addToFileName("6");}
+        else if(xVal >= 140+48*6 && xVal < 140+48*7){ touchX = 140+48*6; if(strLength < 24)addToFileName("7");}
+        else if(xVal >= 140+48*7 && xVal < 140+48*8){ touchX = 140+48*7; if(strLength < 24)addToFileName("8");}
+        else if(xVal >= 140+48*8 && xVal < 140+48*9){ touchX = 140+48*8; if(strLength < 24)addToFileName("9");}
+        else if(xVal >= 140+48*9 && xVal < 140+48*10){ touchX = 140+48*9; if(strLength < 24)addToFileName("0");}
         else return;
-        touchY = 56;
-        touchW = 22;
-        touchH = 22;
+        touchY = 100;
+        touchW = 48;
+        touchH = 40;
         touchDelay = 6;
         isTouching = true;
-    } else if(yVal >= 80 && yVal < 100){ // Q to P
-        if(xVal >= 4 && xVal < 4+16){ touchX = 4; if(strLength < 24)addToFileName("Q");}
-        else if(xVal >= 36 && xVal < 4+32+16){ touchX = 36; if(strLength < 24)addToFileName("W");}
-        else if(xVal >= 68 && xVal < 4+64+16){ touchX = 68; if(strLength < 24)addToFileName("E");}
-        else if(xVal >= 100 && xVal < 4+96+16){ touchX = 100; if(strLength < 24)addToFileName("R");}
-        else if(xVal >= 132 && xVal < 4+128+16){ touchX = 132; if(strLength < 24)addToFileName("T");}
-        else if(xVal >= 164 && xVal < 4+160+16){ touchX = 164; if(strLength < 24)addToFileName("Y");}
-        else if(xVal >= 196 && xVal < 4+192+16){ touchX = 196; if(strLength < 24)addToFileName("U");}
-        else if(xVal >= 228 && xVal < 4+224+16){ touchX = 228; if(strLength < 24)addToFileName("I");}
-        else if(xVal >= 260 && xVal < 4+256+16){ touchX = 260; if(strLength < 24)addToFileName("O");}
-        else if(xVal >= 292 && xVal < 4+288+16){ touchX = 292; if(strLength < 24)addToFileName("P");}
+    } else if(yVal >= 140 && yVal < 180){ // Q to P
+        if(xVal >= 140 && xVal < 140+48){ touchX = 140; if(strLength < 24)addToFileName("Q");}
+        else if(xVal >= 140+48 && xVal < 140+48*2){ touchX = 140+48; if(strLength < 24)addToFileName("W");}
+        else if(xVal >= 140+48*2 && xVal < 140+48*3){ touchX = 140+48*2; if(strLength < 24)addToFileName("E");}
+        else if(xVal >= 140+48*3 && xVal < 140+48*4){ touchX = 140+48*3; if(strLength < 24)addToFileName("R");}
+        else if(xVal >= 140+48*4 && xVal < 140+48*5){ touchX = 140+48*4; if(strLength < 24)addToFileName("T");}
+        else if(xVal >= 140+48*5 && xVal < 140+48*6){ touchX = 140+48*5; if(strLength < 24)addToFileName("Y");}
+        else if(xVal >= 140+48*6 && xVal < 140+48*7){ touchX = 140+48*6; if(strLength < 24)addToFileName("U");}
+        else if(xVal >= 140+48*7 && xVal < 140+48*8){ touchX = 140+48*7; if(strLength < 24)addToFileName("I");}
+        else if(xVal >= 140+48*8 && xVal < 140+48*9){ touchX = 140+48*8; if(strLength < 24)addToFileName("O");}
+        else if(xVal >= 140+48*9 && xVal < 140+48*10){ touchX = 140+48*9; if(strLength < 24)addToFileName("P");}
         else return;
-        touchY = 76;
-        touchW = 22;
-        touchH = 22;
+        touchY = 140;
+        touchW = 48;
+        touchH = 40;
         touchDelay = 6;
         isTouching = true;
-    } else if(yVal >= 100 && yVal < 120){ // A to L
-        if(xVal >= 20 && xVal < 36){ touchX = 20; if(strLength < 24)addToFileName("A");}
-        else if(xVal >= 52 && xVal < 68){ touchX = 52; if(strLength < 24)addToFileName("S");}
-        else if(xVal >= 84 && xVal < 100){ touchX = 84; if(strLength < 24)addToFileName("D");}
-        else if(xVal >= 116 && xVal < 132){ touchX = 116; if(strLength < 24)addToFileName("F");}
-        else if(xVal >= 148 && xVal < 164){ touchX = 148; if(strLength < 24)addToFileName("G");}
-        else if(xVal >= 180 && xVal < 196){ touchX = 180; if(strLength < 24)addToFileName("H");}
-        else if(xVal >= 212 && xVal < 230){ touchX = 212; if(strLength < 24)addToFileName("J");}
-        else if(xVal >= 244 && xVal < 262){ touchX = 244; if(strLength < 24)addToFileName("K");}
-        else if(xVal >= 276 && xVal < 294){ touchX = 276; if(strLength < 24)addToFileName("L");}
+    } else if(yVal >= 180 && yVal < 220){ // A to L
+        if(xVal >= 140 && xVal < 140+48){ touchX = 140; if(strLength < 24)addToFileName("A");}
+        else if(xVal >= 140+48 && xVal < 140+48*2){ touchX = 140+48; if(strLength < 24)addToFileName("S");}
+        else if(xVal >= 140+48*2 && xVal < 140+48*3){ touchX = 140+48*2; if(strLength < 24)addToFileName("D");}
+        else if(xVal >= 140+48*3 && xVal < 140+48*4){ touchX = 140+48*3; if(strLength < 24)addToFileName("F");}
+        else if(xVal >= 140+48*4 && xVal < 140+48*5){ touchX = 140+48*4; if(strLength < 24)addToFileName("G");}
+        else if(xVal >= 140+48*5 && xVal < 140+48*6){ touchX = 140+48*5; if(strLength < 24)addToFileName("H");}
+        else if(xVal >= 140+48*6 && xVal < 140+48*7){ touchX = 140+48*6; if(strLength < 24)addToFileName("J");}
+        else if(xVal >= 140+48*7 && xVal < 140+48*8){ touchX = 140+48*7; if(strLength < 24)addToFileName("K");}
+        else if(xVal >= 140+48*8 && xVal < 140+48*9){ touchX = 140+48*8; if(strLength < 24)addToFileName("L");}
         else return;
-        touchY = 96;
-        touchW = 22;
-        touchH = 22;
+        touchY = 180;
+        touchW = 48;
+        touchH = 40;
         touchDelay = 6;
         isTouching = true;
-    } else if(yVal >= 120 && yVal < 140){ // Z to M
-        if(xVal >= 52 && xVal < 68){ touchX = 52; if(strLength < 24)addToFileName("Z");}
-        else if(xVal >= 84 && xVal < 100){ touchX = 84; if(strLength < 24)addToFileName("X");}
-        else if(xVal >= 116 && xVal < 132){ touchX = 116; if(strLength < 24)addToFileName("C");}
-        else if(xVal >= 148 && xVal < 164){ touchX = 148; if(strLength < 24)addToFileName("V");}
-        else if(xVal >= 180 && xVal < 196){ touchX = 180; if(strLength < 24)addToFileName("B");}
-        else if(xVal >= 212 && xVal < 230){ touchX = 212; if(strLength < 24)addToFileName("N");}
-        else if(xVal >= 244 && xVal < 262){ touchX = 244; if(strLength < 24)addToFileName("M");}
+    } else if(yVal >= 220 && yVal < 260){ // Z to M
+        if(xVal >= 140 && xVal < 140+48){ touchX = 140; if(strLength < 24)addToFileName("Z");}
+        else if(xVal >= 140+48 && xVal < 140+48*2){ touchX = 140+48; if(strLength < 24)addToFileName("X");}
+        else if(xVal >= 140+48*2 && xVal < 140+48*3){ touchX = 140+48*2; if(strLength < 24)addToFileName("C");}
+        else if(xVal >= 140+48*3 && xVal < 140+48*4){ touchX = 140+48*3; if(strLength < 24)addToFileName("V");}
+        else if(xVal >= 140+48*4 && xVal < 140+48*5){ touchX = 140+48*4; if(strLength < 24)addToFileName("B");}
+        else if(xVal >= 140+48*5 && xVal < 140+48*6){ touchX = 140+48*5; if(strLength < 24)addToFileName("N");}
+        else if(xVal >= 140+48*6 && xVal < 140+48*7){ touchX = 140+48*6; if(strLength < 24)addToFileName("M");}
         else return;
-        touchY = 116;
-        touchW = 22;
-        touchH = 22;
+        touchY = 220;
+        touchW = 48;
+        touchH = 40;
         touchDelay = 6;
         isTouching = true;
-    } else if(yVal >= 140 && yVal < 160){ // SPACE and BACKSPACE
-        if(xVal >= 32 && xVal < 112){ 
-            touchX = 32; 
-            touchW = 16*5+14;
+    } else if(yVal >= 260 && yVal < 300){ // SPACE and BACKSPACE
+        if(xVal >= 140 && xVal < 140+48*4){ 
+            touchX = 140; 
+            touchW = 48*4;
             if(strLength < 24)addToFileName("_"); // Underscores don't appear in the game.
         }
-        else if(xVal >= 148 && xVal < 262){ 
+        else if(xVal >= 140+48*4 && xVal < 140+48*9){ 
             if(strLength <= 0) return;
-            touchX = 148; 
-            touchW = 16*9+8;
+            touchX = 140+48*4; 
+            touchW = 48*5;
             fileNames[worldFileCount][strLength-1] = '\0';
         }
         else return;
-        touchY = 136;
-        touchH = 22;
+        touchY = 250;
+        touchH = 40;
         touchDelay = 6;
         isTouching = true;
     }
@@ -326,7 +326,7 @@ void tickMenu(int menu){
                             k_menuNext.input = keyProp[10];
                             k_menuPrev.input = keyProp[11];
                             
-                            FILE *fs=fopen("btnSave.bin","wb");
+                            FILE *fs=fopen("ux0:/data/Minicraft/btnSave.bin","wb");
                             fwrite(keyProp,sizeof(int),12,fs);
                             fclose(fs);
                             
@@ -742,7 +742,8 @@ void renderMenu(int menu,int xscr,int yscr){
         case MENU_SETTINGS_TP:
             offsetX = 0;offsetY = (currentSelection * 40) - 48;
 		    vita2d_start_drawing();
-		        drawText("Texture Packs",122,-16);
+				vita2d_clear_screen();
+		        drawSizedText("Texture Packs",(715-(13*48))/2,30,4.0);
 		        for(i = 0; i < tpFileCount; ++i){
                     int color = 0xFF923232;
                     char * text = tpFileNames[i];
@@ -755,18 +756,10 @@ void renderMenu(int menu,int xscr,int yscr){
                     if(i != currentSelection) color &= 0x7FFFFFFF; // Darken color.
                     else if(areYouSure)color = 0xFF1010DF;
                     
-                    renderFrame(1,i*5,24,(i*5)+5,color);
-                    drawText(text,(400-(strlen(text)*12))/2,i*80+16);
+                    //renderFrame(1,i*5,24,(i*5)+5,color);
+                    drawSizedText(text,80,180+i*30,2.0);
                     
-                    if(strlen(cmtText) > 29){
-                        char cmtTxt1[30],cmtTxt2[30];
-                        strncpy(cmtTxt1, cmtText, 29);
-                        strncpy(cmtTxt2, cmtText + 29, strlen(cmtText)-29);
-                        drawTextColor(cmtTxt1,(400-(strlen(cmtTxt1)*12))/2,i*80+36,0xFFAFAFAF);
-                        drawTextColor(cmtTxt2,(400-(strlen(cmtTxt2)*12))/2,i*80+50,0xFFAFAFAF);
-                    } else {
-                        drawTextColor(cmtText,(400-(strlen(cmtText)*12))/2,i*80+43,0xFFAFAFAF);
-                    }
+                    drawSizedTextColor(cmtText,24,4,2.0,0xFF7FFFFF);
                 }
             offsetX = 0;offsetY = 0;
                 if(isLoadingTP > 0){
@@ -786,17 +779,18 @@ void renderMenu(int menu,int xscr,int yscr){
                         currentSelection = 1; 
                     }
                 }
-                drawText("Press   to select", 58, 100);
-                renderButtonIcon(k_accept.input & -k_accept.input, 128, 98, 1);
-                drawText("Press   to return", 58, 150);
-                renderButtonIcon(k_decline.input & -k_decline.input, 128, 148, 1);
+                drawSizedText("Press    to select", 80, 300, 2.0);
+                renderButtonIcon(k_accept.input & -k_accept.input, 244, 282, 1);
+                drawSizedText("Press    to return", 80, 350, 2.0);
+                renderButtonIcon(k_decline.input & -k_decline.input, 244, 332, 1);
 		    vita2d_end_drawing();
         break;
         case MENU_LOADGAME:
 		vita2d_start_drawing();
+		vita2d_clear_screen();
         if(!enteringName){ // World select
             offsetX = 0;offsetY = (currentSelection * 32) - 48;
-            drawText("Select a file",122,-16);
+            drawSizedText("Select a file",(715-(13*48))/2,30,4.0);
             for(i = 0; i < worldFileCount + 1; ++i){
                 int color = 0xFF921020;
                 char * text = fileNames[i];
@@ -812,68 +806,67 @@ void renderMenu(int menu,int xscr,int yscr){
                 char scoreText[24];
                 sprintf(scoreText,"Score: %d",fileScore[i]);
                 
-                renderFrame(1,i*4,24,(i*4)+4,color);
+                renderFrame(12,i*4,35,(i*4)+4,color);
                 if(i != worldFileCount){
-                    drawText(text,(400-(strlen(text)*12))/2,i*64+12);
-                    drawText(scoreText,(400-(strlen(scoreText)*12))/2,i*64+32);
+                    drawText(text,(690-(strlen(text)*12))/2,i*64+12);
+                    drawText(scoreText,(690-(strlen(scoreText)*12))/2,i*64+32);
                 } else {
-                    drawText(text,(400-(strlen(text)*12))/2,i*64+24);
+                    drawText(text,(690-(strlen(text)*12))/2,i*64+24);
                 }
                 if(fileWin[i] && i != worldFileCount) render16(18,i*32+8,24,208,0); // Render crown
             }
             offsetX = 0;offsetY = 0;
         } else { // Enter new world name.
-            drawText("Enter a name",128,16);
-            drawText(fileNames[worldFileCount],(400-(strlen(fileNames[worldFileCount])*12))/2, 48);
+            drawSizedText("Enter a name",(680-(12*48))/2,30,4.0);
+            drawSizedText(fileNames[worldFileCount],80, 340 ,2.0);
             
             if(errorFileName > 0){
                 switch(errorFileName){// Error: Filename cannot already exist.
-                    case 1: drawTextColor("ERROR: Length cannot be 0!",(400-26*12)/2,200,0xFF1010AF); break;    
-                    case 2: drawTextColor("ERROR: You need Letters/Numbers!",(400-32*12)/2,200,0xFF1010AF); break;    
-                    case 3: drawTextColor("ERROR: Filename already exists!",(400-31*12)/2,200,0xFF1010AF); break;    
+                    case 1: drawSizedTextColor("ERROR: Length cannot be 0!",5,315,2.0,0xFF1010AF); break;    
+                    case 2: drawSizedTextColor("ERROR: You need Letters/Numbers!",5,315,2.0,0xFF1010AF); break;    
+                    case 3: drawSizedTextColor("ERROR: Filename already exists!",5,315,2.0,0xFF1010AF); break;    
                 }    
             }
         }
         if(!enteringName){ // World select
             if(!areYouSure){
-                drawTextColor("Load World",100,12,0xFF3FFFFF);
-                drawText("Press   or   to scroll", 28, 50);
-                renderButtonIcon(k_up.input & -k_up.input, 98, 48, 1);
-                renderButtonIcon(k_down.input & -k_down.input, 160, 48, 1);
-                drawText("Press   to load world", (320-21*12)/2, 100);
-                renderButtonIcon(k_accept.input & -k_accept.input, 104, 98, 1);
-                drawText("Press   to return", 58, 150);
-                renderButtonIcon(k_decline.input & -k_decline.input, 128, 148, 1);
+                drawSizedTextColor("Load World",24,4,2.0,0xFF3FFFFF);
+                drawSizedText("Press   or   to scroll", 80, 250,2.0);
+                renderButtonIcon(k_up.input & -k_up.input, 240, 232, 1);
+                renderButtonIcon(k_down.input & -k_down.input, 324, 232, 1);
+                drawSizedText("Press    to load world", 80, 300,2.0);
+                renderButtonIcon(k_accept.input & -k_accept.input, 244, 282, 1);
+                drawSizedText("Press    to return", 80, 350, 2.0);
+                renderButtonIcon(k_decline.input & -k_decline.input, 244, 332, 1);
                 if(currentSelection != worldFileCount){
-                    drawText("Press   to delete",(320-17*12)/2, 200);
-                    renderButtonIcon(k_delete.input & -k_delete.input, 128, 198, 1);
+                    drawSizedText("Press    to delete",80, 400,2.0);
+                    renderButtonIcon(k_delete.input & -k_delete.input, 244, 382, 1);
                 }
             } else {
-                drawTextColor("Delete File?",88,12,0xFF3F3FFF);
-                drawText("Press   to confirm", (320-18*12)/2, 100);
+                drawSizedTextColor("Delete File?",88,12,2.0,0xFF3F3FFF);
+                drawSizedText("Press   to confirm", (320-18*12)/2, 100,2.0);
                 renderButtonIcon(k_accept.input & -k_accept.input, 122, 98, 1);
-                drawText("Press   to return", 58, 150);
+                drawSizedText("Press   to return", 58, 150,2.0);
                 renderButtonIcon(k_decline.input & -k_decline.input, 128, 148, 1);
             }
             
         } else { // Draw the "keyboard"
-            drawTextColor("Touch the keypad below",(320-22*12)/2,12,0xFF33FFFF);
+            drawSizedTextColor("Touch the keypad below",24,4,2.0,0xFF33FFFF);
             
-            vita2d_draw_rectangle(0, 50, 320, 110, 0xFF7F7FBF);
-            drawSizedText(guiText0,4, 60, 2);
-            drawSizedText(guiText1,4, 80, 2);
-            drawSizedText(guiText2,12, 100, 2);
-            drawSizedText(guiText3,28, 120, 2);
-            drawSizedText(guiText4,12, 140, 2);
-            
+            vita2d_draw_rectangle(140, 95, 480, 210, 0xFF7F7FBF);
+            drawSizedText(guiText0,50, 100, 3);
+            drawSizedText(guiText1,50, 140, 3);
+            drawSizedText(guiText2,50, 180, 3);
+            drawSizedText(guiText3,50, 220, 3);
+            drawSizedText(guiText4,50, 260, 3);
             if(touchDelay > 0){
                 vita2d_draw_rectangle(touchX, touchY, touchW, touchH, 0xAF000000);
             }
             
-            drawText("Press   to confirm", (320-18*12)/2, 180);
-            renderButtonIcon(k_accept.input & -k_accept.input, 122, 178, 1);
-            drawText("Press   to return", 58, 210);
-            renderButtonIcon(k_decline.input & -k_decline.input, 128, 208, 1);
+            drawSizedText("Press    to confirm", 80, 430, 2.0);
+            renderButtonIcon(k_accept.input & -k_accept.input, 244, 412, 1);
+            drawSizedText("Press    to return", 80, 480, 2.0);
+            renderButtonIcon(k_decline.input & -k_decline.input, 244, 462, 1);
         }
             
 		vita2d_end_drawing();
