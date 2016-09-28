@@ -16,6 +16,7 @@ typedef struct {
 void loadSound(Sound * snd, char * filename);
 void playSound(Sound snd);
 void freeSounds();
+void initSound();
 
 Sound snd_playerHurt;
 Sound snd_playerDeath;

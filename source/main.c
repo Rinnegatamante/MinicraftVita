@@ -179,14 +179,15 @@ int main() {
 	dirtColor[2] = SWAP_UINT32(vita2d_texture_get_pixel(icons, 16, 2)); 
 	dirtColor[3] = SWAP_UINT32(vita2d_texture_get_pixel(icons, 16, 3)); 
 	dirtColor[4] = SWAP_UINT32(vita2d_texture_get_pixel(icons, 16, 4)); 
-
-	loadSound(&snd_playerHurt, "resources/playerhurt.raw");
-	loadSound(&snd_playerDeath, "resources/playerdeath.raw");
-	loadSound(&snd_monsterHurt, "resources/monsterhurt.raw");
-	loadSound(&snd_test, "resources/test.raw");
-	loadSound(&snd_pickup, "resources/pickup.raw");
-	loadSound(&snd_bossdeath, "resources/bossdeath.raw");
-	loadSound(&snd_craft, "resources/craft.raw");
+	
+	initSound();
+	loadSound(&snd_playerHurt, "ux0:/data/Minicraft/resources/playerhurt.raw");
+	loadSound(&snd_playerDeath, "ux0:/data/Minicraft/resources/playerdeath.raw");
+	loadSound(&snd_monsterHurt, "ux0:/data/Minicraft/resources/monsterhurt.raw");
+	loadSound(&snd_test, "ux0:/data/Minicraft/resources/test.raw");
+	loadSound(&snd_pickup, "ux0:/data/Minicraft/resources/pickup.raw");
+	loadSound(&snd_bossdeath, "ux0:/data/Minicraft/resources/bossdeath.raw");
+	loadSound(&snd_craft, "ux0:/data/Minicraft/resources/craft.raw");
 	
 	bakeLights();
 	
@@ -272,12 +273,12 @@ int main() {
 			    drawText(fpsstr, 2, 225);
             }
 			
-                if(!shouldRenderMap){
+                /*if(!shouldRenderMap){
                     vita2d_draw_texture(bottombg, 0, 0);
                     renderGui();
                 } else {
                     renderZoomedMap();
-                }
+                }*/
              vita2d_end_drawing();
 		} else {
 			tickMenu(currentMenu);

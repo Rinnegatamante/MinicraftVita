@@ -4,7 +4,7 @@ SOURCES		:= source source/minizip
 INCLUDES	:= include
 DATA		:= data
 LIBS = -lvita2d -lSceKernel_stub -lSceSysmodule_stub -lSceCtrl_stub -lSceTouch_stub \
-	-lm -lSceAppUtil_stub -lScePgf_stub \
+	-lm -lSceAppUtil_stub -lScePgf_stub -lSceAudio_stub \
 	-ljpeg -lfreetype -lc -lScePower_stub -lSceCommonDialog_stub -lpng16 -lz \
 	-lSceGxm_stub -lSceDisplay_stub
 
