@@ -49,8 +49,8 @@ void renderr(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, uint8_t bit
 		scaleY = -2;
 		yp += 8;
 	}
-	/*vita2d_draw_texture_part_rotate_scale(icons, xp << 1, yp << 1, rotate, xTile,
-			yTile, 8, 8, scaleX, scaleY);*/
+	vita2d_draw_texture_part_scale_rotate(icons, xp << 1, yp << 1, rotate, xTile,
+			yTile, 8, 8, scaleX, scaleY);
 }
 void renderc(int32_t xp, int32_t yp, uint32_t xTile, uint32_t yTile, int sizeX, int sizeY,
 		uint8_t bits) {
