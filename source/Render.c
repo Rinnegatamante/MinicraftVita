@@ -171,41 +171,51 @@ void renderTitle(int x, int y) {
 	vita2d_draw_texture_part_scale(icons, x + 248, y + 82, 104, 240, 152, 16, 2.0, 2.0); // PSVITA HOMEBREW EDITION
 }
 
+void renderButtonIconNorm(uint32_t keyIcon, int x, int y, float scale) {
+	switch (keyIcon) {
+	case SCE_CTRL_CROSS:
+		render16c(x, y, 0, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_CIRCLE:
+		render16c(x, y, 16, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_TRIANGLE:
+		render16c(x, y, 32, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_SQUARE:
+		render16c(x, y, 48, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_UP:
+		render16c(x, y, 64, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_LEFT:
+		render16c(x, y, 80, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_DOWN:
+		render16c(x, y, 96, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_RIGHT:
+		render16c(x, y, 112, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_START:
+		render16c(x - 8, y, 128, 224, 0, scale , scale );
+		render16c(x + 8, y, 144, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_SELECT:
+		render16c(x - 8, y, 160, 224, 0, scale , scale );
+		render16c(x + 8, y, 176, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_LTRIGGER:
+		render16c(x, y, 192, 224, 0, scale , scale );
+		break;
+	case SCE_CTRL_RTRIGGER:
+		render16c(x, y, 208, 224, 0, scale , scale );
+		break;
+	}
+}
+
 void renderButtonIcon(uint32_t keyIcon, int x, int y, float scale) {
 	switch (keyIcon) {
-	/*case CIRCLEPAD:
-		render16cx2(x, y, 96, 208, 0, scale, scale);
-		break;
-	case KEY_CPAD_UP:
-		render16cx2(x, y, 112, 208, 0, scale, scale);
-		break;
-	case KEY_CPAD_LEFT:
-		render16cx2(x, y, 128, 208, 0, scale, scale);
-		break;
-	case KEY_CPAD_DOWN:
-		render16cx2(x, y, 144, 208, 0, scale, scale);
-		break;
-	case KEY_CPAD_RIGHT:
-		render16cx2(x, y, 160, 208, 0, scale, scale);
-		break;*/
-
-		/* New 3DS only */
-	/*case CSTICK:
-		render16cx2(x, y, 176, 208, 0, scale, scale);
-		break;
-	case KEY_CSTICK_UP:
-		render16cx2(x, y, 192, 208, 0, scale, scale);
-		break;
-	case KEY_CSTICK_LEFT:
-		render16cx2(x, y, 208, 208, 0, scale, scale);
-		break;
-	case KEY_CSTICK_DOWN:
-		render16cx2(x, y, 224, 208, 0, scale, scale);
-		break;
-	case KEY_CSTICK_RIGHT:
-		render16cx2(x, y, 240, 208, 0, scale, scale);
-		break;*/
-
 	case SCE_CTRL_CROSS:
 		render16cx2(x, y, 0, 224, 0, scale , scale );
 		break;
@@ -244,14 +254,6 @@ void renderButtonIcon(uint32_t keyIcon, int x, int y, float scale) {
 	case SCE_CTRL_RTRIGGER:
 		render16cx2(x, y, 208, 224, 0, scale , scale );
 		break;
-
-		/* New 3DS only */
-	/*case KEY_ZL:
-		render16cx2(x, y, 224, 224, 0, scale, scale);
-		break;
-	case KEY_ZR:
-		render16cx2(x, y, 240, 224, 0, scale, scale);
-		break;*/
 	}
 }
 

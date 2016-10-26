@@ -1,6 +1,3 @@
-#ifndef SceGxtErrorCode
-#  define SceGxtErrorCode uint8_t
-#endif
 #include <vitasdk.h>
 #include <vita2d.h>
 #include <string.h> 
@@ -151,6 +148,7 @@ void clearScreen(int* data, uint8_t fill, int size) {
 
 char debugText[34];
 char bossHealthText[34];
+vita2d_texture* fbo = NULL;
 int main() {
 	FILE * file;
 	shouldRenderDebug = true;
@@ -163,7 +161,6 @@ int main() {
     
 	sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
 	vita2d_init();
-	//csndInit();
 	noItem = newItem(ITEM_NULL, 0);
 	
 	currentMenu = MENU_TITLE;
@@ -239,6 +236,7 @@ int main() {
 	tickCount = 0;
 	initRecipes();
 	defineTables();
+	fbo = vita2d_create_empty_texture(960,544);
 	
 	SceCtrlData pad, oldpad;
 	for (;;) {
@@ -250,11 +248,12 @@ int main() {
 		if (quitGame) break;
 
 		if (initGame > 0) setupGame(initGame == 1 ? true : false);
-
+		
 		if (currentMenu == 0) {
 			tick();
-			vita2d_start_drawing();
-
+			
+			vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+			
 			offsetX = xscr;
 			offsetY = yscr;
 			vita2d_draw_rectangle(0, 0, 960, 544, 0xFF0C0C0C); //RGBA8(12, 12, 12, 255)); //You might think "real" black would be better, but it actually looks better that way
@@ -279,13 +278,17 @@ int main() {
                 } else {
                     renderZoomedMap();
                 }*/
-             vita2d_end_drawing();
+            vita2d_end_drawing();
+			 
 		} else {
 			tickMenu(currentMenu);
 			renderMenu(currentMenu, xscr, yscr);
 		}
 		
 		oldpad = pad;
+		vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+        vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+        vita2d_end_drawing();
 		vita2d_swap_buffers();
 	}
 

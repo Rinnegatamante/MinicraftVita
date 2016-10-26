@@ -731,6 +731,8 @@ char guiText2[] = "A S D F G H J K L";
 char guiText3[] = "Z X C V B N M";
 char guiText4[] = " SPACE  BACKSPACE";
 
+extern vita2d_texture* fbo;
+
 void renderMenu(int menu,int xscr,int yscr){
     int i = 0;
     switch(menu){
@@ -768,10 +770,10 @@ void renderMenu(int menu,int xscr,int yscr){
                     drawTextColor("Loading Texture pack...",(400-(23*12))/2,108,0xFF10FFFF);
                     if(isLoadingTP == 0){
                         char fullDirName[256];
-                        sprintf(fullDirName,"texturepacks/%s.zip",tpFileNames[currentSelection]);
+                        sprintf(fullDirName,"ux0:/data/Minicraft/texturepacks/%s.zip",tpFileNames[currentSelection]);
                         loadedtp = loadTexturePack(fullDirName);   
                         
-                        FILE * fs=fopen("lastTP.bin","w");
+                        FILE * fs=fopen("ux0:/data/Minicraft/lastTP.bin","w");
                         fprintf(fs,"%s", fullDirName);
                         fclose(fs);
                         
@@ -955,7 +957,7 @@ void renderMenu(int menu,int xscr,int yscr){
         break;
         
         case MENU_PAUSED:
-		    vita2d_start_drawing();
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -980,15 +982,15 @@ void renderMenu(int menu,int xscr,int yscr){
                     
                     drawText("Are you sure?",122,96);
                     drawText("   Yes", 164, 117);
-                    renderButtonIcon(k_accept.input & -k_accept.input, 166, 114, 1);
+                    renderButtonIconNorm(k_accept.input & -k_accept.input, 166, 114, 1);
                     drawText("   No", 170, 133);
-                    renderButtonIcon(k_decline.input & -k_decline.input, 166, 130, 1);
+                    renderButtonIconNorm(k_decline.input & -k_decline.input, 166, 130, 1);
                 }
                 
 		    vita2d_end_drawing();
         break;  
         case MENU_WIN:
-		    vita2d_start_drawing();
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1009,7 +1011,7 @@ void renderMenu(int menu,int xscr,int yscr){
 		    vita2d_end_drawing();
         break;  
         case MENU_LOSE:
-		    vita2d_start_drawing();
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1029,7 +1031,7 @@ void renderMenu(int menu,int xscr,int yscr){
 		    vita2d_end_drawing();
         break;  
         case MENU_INVENTORY:
-		    vita2d_start_drawing();
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1042,7 +1044,7 @@ void renderMenu(int menu,int xscr,int yscr){
 		    vita2d_end_drawing();
         break;  
         case MENU_CRAFTING:
-		    vita2d_start_drawing();
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1078,7 +1080,7 @@ void renderMenu(int menu,int xscr,int yscr){
         break;  
         
         case MENU_CONTAINER:
-		    vita2d_start_drawing();
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
