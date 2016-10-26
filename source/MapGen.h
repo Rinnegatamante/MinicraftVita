@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#ifndef SceGxtErrorCode
-#  define SceGxtErrorCode uint8_t
-#endif
 #include <vitasdk.h>
 #include "Globals.h"
 

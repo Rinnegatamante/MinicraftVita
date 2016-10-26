@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#ifndef SceGxtErrorCode
-#  define SceGxtErrorCode uint8_t
-#endif
 #include <vitasdk.h>
 
 

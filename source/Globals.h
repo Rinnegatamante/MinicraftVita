@@ -1,7 +1,4 @@
 #pragma once
-#ifndef SceGxtErrorCode
-#  define SceGxtErrorCode uint8_t
-#endif
 #include <vitasdk.h>
 #include <vita2d.h>
 #include "SaveLoad.h"

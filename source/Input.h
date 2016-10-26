@@ -1,6 +1,3 @@
-#ifndef SceGxtErrorCode
-#  define SceGxtErrorCode uint8_t
-#endif
 #undef bool
 #ifndef bool
 #  define bool uint32_t

@@ -1,7 +1,4 @@
 #pragma once
-#ifndef SceGxtErrorCode
-#  define SceGxtErrorCode uint8_t
-#endif
 #include <vitasdk.h>
 #include <vita2d.h>
 #include <string.h> 
@@ -33,6 +30,7 @@ void renderTile(int i, int x, int y);
 void renderBackground(int xScroll, int yScroll);
 void renderMenuBackground(int xScroll, int yScroll); //Renders the darkness
 void renderButtonIcon(uint32_t icon, int x, int y, float scale);
+void renderButtonIconNorm(uint32_t icon, int x, int y, float scale);
 
 void bakeLights();
 void freeLightBakes();
