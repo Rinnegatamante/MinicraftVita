@@ -1005,7 +1005,7 @@ void renderMenu(int menu,int xscr,int yscr){
                 drawTextColor("You Win!",158,76,0xAFAF0000 + opacity);
                 drawText(scoreText, 200-((strlen(scoreText)-1)*6), 100);
                 drawText("Press   to continue", 96, 150);
-                renderButtonIcon(k_attack.input & -k_attack.input, 166, 148, 1);
+                renderButtonIconNorm(k_attack.input & -k_attack.input, 166, 148, 1);
                 
                 //printf("0x%08X",k_attack.input & -k_attack.input);
 		    vita2d_end_drawing();
@@ -1026,7 +1026,7 @@ void renderMenu(int menu,int xscr,int yscr){
                 drawTextColor("You DIED!",158,76,0xAF000000 + opacity);
                 drawText(scoreText, 200-((strlen(scoreText)-1)*6), 100);
                 drawText("Press   to continue", 96, 150);
-                renderButtonIcon(k_attack.input & -k_attack.input, 166, 148, 1);
+                renderButtonIconNorm(k_attack.input & -k_attack.input, 166, 148, 1);
                 //printf("0x%08X",k_attack.input & -k_attack.input);
 		    vita2d_end_drawing();
         break;  
