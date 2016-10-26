@@ -269,27 +269,21 @@ int main() {
 			
 			if(shouldRenderDebug){
 			    sprintf(fpsstr, " X:%d, Y:%d, E:%d", player.x, player.y, eManager.lastSlot[currentLevel]);
-			    drawText(fpsstr, 2, 225);
+			    drawText(fpsstr, 2, 5);
             }
-			
-                /*if(!shouldRenderMap){
-                    vita2d_draw_texture(bottombg, 0, 0);
-                    renderGui();
-                } else {
-                    renderZoomedMap();
-                }*/
+			renderGui();
             vita2d_end_drawing();
-			 
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			
 		} else {
 			tickMenu(currentMenu);
 			renderMenu(currentMenu, xscr, yscr);
 		}
 		
-		oldpad = pad;
-		vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
-        vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
-        vita2d_end_drawing();
 		vita2d_swap_buffers();
+		oldpad = pad;
 	}
 
 	freeRecipes();

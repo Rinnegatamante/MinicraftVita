@@ -701,25 +701,14 @@ void renderGui() {
 	int i;
 	for (i = 0; i < 10; ++i) {
 		if (i < player.p.health)
-			render(i * 8 + 6, 5, 168, 152, 0);
+			render(i * 8 + 6, 100, 168, 152, 0);
 		else
-			render(i * 8 + 6, 5, 176, 152, 0);
+			render(i * 8 + 6, 100, 176, 152, 0);
 		if (i < player.p.stamina)
-			render(i * 8 + 6, 14, 184, 152, 0);
+			render(i * 8 + 6, 109, 184, 152, 0);
 		else
-			render(i * 8 + 6, 14, 191, 152, 0);
+			render(i * 8 + 6, 109, 191, 152, 0);
 	}
-	vita2d_draw_texture(minimap[currentLevel], 96, 102);
-	renderItemWithTextCentered(player.p.activeItem, 320, 66);
-	itoa(player.p.score, scoreT, 10); // integer to base10 string
-	drawText("Score:",214,12);
-	drawText(scoreT,(140-(strlen(scoreT)*12))/2 + 180,29);
-	if(currentLevel == 0){
-        if(awX != 0 && awY != 0){
-            renderc(44 + (awX/32), 47 + (awY/32), 88, 216, 8, 8, 0); // Mini-AWizard head.
-        }
-    }
-	renderc(44 + (player.x/32), 47 + (player.y/32), 88, 208, 8, 8, 0); // Mini-Player head.
 }
 
 void renderPlayer() {
