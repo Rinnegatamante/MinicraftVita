@@ -2,7 +2,7 @@
 
 void vita2d_texture_set_pixel(vita2d_texture* texture, int x, int y, unsigned int color){
 	uint32_t* data = vita2d_texture_get_datap(texture);
-	uint32_t pitch = vita2d_texture_get_stride(texture);
+	uint32_t pitch = vita2d_texture_get_stride(texture)>>2;
 	data[x+y*pitch] = color;
 }
 
