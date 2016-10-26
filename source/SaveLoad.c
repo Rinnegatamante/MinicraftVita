@@ -31,7 +31,9 @@ bool entityIsImportant(Entity * e){
 }
 
 void saveCurrentWorld(char * filename, EntityManager * eManager, Entity * player, uint8_t * map, uint8_t * mapData){
-    FILE * file = fopen(filename, "wb");
+	char path[256];
+	sprintf(path, "ux0:/data/Minicraft/%s", filename);
+    FILE * file = fopen(path, "wb");
     int i,j;
 
     // Player Data
@@ -100,10 +102,12 @@ void saveCurrentWorld(char * filename, EntityManager * eManager, Entity * player
 }
 
 int loadWorld(char * filename, EntityManager * eManager, Entity * player, uint8_t * map, uint8_t * mapData){
+	char path[256];
+	sprintf(path, "ux0:/data/Minicraft/%s", filename);
     FILE * file;
     int i,j;
         
-        if ((file = fopen(filename, "rb"))){
+        if ((file = fopen(path, "rb"))){
             
             fread(&player->p.score, sizeof(int), 1, file);
             fread(&player->p.hasWonSaved, sizeof(bool), 1, file);
