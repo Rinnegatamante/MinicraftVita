@@ -51,14 +51,15 @@ int16_t pauseSaveDisplayTimer = 0;
 void readFiles(){
     memset(&fileNames, 0, sizeof(fileNames)); // reset fileNames
     worldFileCount = 0;
-    SceUID d;
     SceIoDirent dir;
-    d = sceIoDopen(".");
+    SceUID d = sceIoDopen("ux0:/data/Minicraft");
     if (d >= 0){
         while (sceIoDread(d, &dir) > 0) {
             if (strstr(dir.d_name, ".wld") != NULL) { // Check if filename contains ".wld"
                 strncpy(fileNames[worldFileCount], dir.d_name, strlen(dir.d_name)-4);
-                FILE * file = fopen(dir.d_name, "rb");
+				char fullDirName[256];
+                sprintf(fullDirName,"ux0:/data/Minicraft/%s",dir.d_name);
+                FILE* file = fopen(fullDirName, "rb");
                 fread(&fileScore[worldFileCount],sizeof(int), 1, file);
                 fread(&fileWin[worldFileCount],sizeof(bool), 1, file);
                 fclose(file);
@@ -73,9 +74,8 @@ void readTPFiles(){
     memset(&tpFileNames, 0, sizeof(tpFileNames)); // reset tp fileNames
     memset(&tpFileComment, 0, sizeof(tpFileComment)); // reset zip comments
     tpFileCount = 1; // 0 = default.
-    SceUID d;
     SceIoDirent dir;
-    d = sceIoDopen("ux0:/data/Minicraft/texturepacks/");
+    SceUID d = sceIoDopen("ux0:/data/Minicraft/texturepacks/");
     if (d >= 0){
 	    while (sceIoDread(d, &dir) > 0) {
             if (strstr(dir.d_name, ".zip") != NULL) { // Check if filename contains ".zip"
@@ -793,30 +793,25 @@ void renderMenu(int menu,int xscr,int yscr){
         if(!enteringName){ // World select
             offsetX = 0;offsetY = (currentSelection * 32) - 48;
             drawSizedText("Select a file",(715-(13*48))/2,30,4.0);
-            for(i = 0; i < worldFileCount + 1; ++i){
-                int color = 0xFF921020;
-                char * text = fileNames[i];
-                if(i == worldFileCount){
-                    text = "Generate New World";
-                    color = 0xFF209210;
-                }
-                if(i != currentSelection) color &= 0xFF7F7F7F; // Darken color.
-                else {
-                    if(areYouSure)color = 0xFF1010DF;
-                }
-                
-                char scoreText[24];
-                sprintf(scoreText,"Score: %d",fileScore[i]);
-                
-                renderFrame(12,i*4,35,(i*4)+4,color);
-                if(i != worldFileCount){
-                    drawText(text,(690-(strlen(text)*12))/2,i*64+12);
-                    drawText(scoreText,(690-(strlen(scoreText)*12))/2,i*64+32);
-                } else {
-                    drawText(text,(690-(strlen(text)*12))/2,i*64+24);
-                }
-                if(fileWin[i] && i != worldFileCount) render16(18,i*32+8,24,208,0); // Render crown
+			char* text = fileNames[currentSelection];
+			int color = 0xFF921020;
+            if(currentSelection == worldFileCount){
+                text = "Generate New World";
+                color = 0xFF209210;
             }
+            if(areYouSure)color = 0xFF1010DF;
+                
+            char scoreText[24];
+            sprintf(scoreText,"Score: %d",fileScore[currentSelection]);
+                
+            renderFrame(12,currentSelection*4,35,(currentSelection*4)+4,color);
+            if(currentSelection != worldFileCount){
+                drawText(text,(690-(strlen(text)*12))/2,currentSelection*64+12);
+                drawText(scoreText,(690-(strlen(scoreText)*12))/2,currentSelection*64+32);
+            } else {
+                drawText(text,(690-(strlen(text)*12))/2,currentSelection*64+24);
+            }
+            if(fileWin[currentSelection] && currentSelection != worldFileCount) render16(18,currentSelection*32+8,24,208,0); // Render crown
             offsetX = 0;offsetY = 0;
         } else { // Enter new world name.
             drawSizedText("Enter a name",(680-(12*48))/2,30,4.0);
@@ -954,8 +949,7 @@ void renderMenu(int menu,int xscr,int yscr){
                 renderButtonIcon(k_decline.input & -k_decline.input, 128, 148, 1);
             }
 		    vita2d_end_drawing();
-        break;
-        
+        break;       
         case MENU_PAUSED:
 		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
@@ -988,6 +982,10 @@ void renderMenu(int menu,int xscr,int yscr){
                 }
                 
 		    vita2d_end_drawing();
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
         break;  
         case MENU_WIN:
 		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
@@ -1009,7 +1007,11 @@ void renderMenu(int menu,int xscr,int yscr){
                 
                 //printf("0x%08X",k_attack.input & -k_attack.input);
 		    vita2d_end_drawing();
-        break;  
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
+	        break;  
         case MENU_LOSE:
 		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
@@ -1029,6 +1031,10 @@ void renderMenu(int menu,int xscr,int yscr){
                 renderButtonIconNorm(k_attack.input & -k_attack.input, 166, 148, 1);
                 //printf("0x%08X",k_attack.input & -k_attack.input);
 		    vita2d_end_drawing();
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
         break;  
         case MENU_INVENTORY:
 		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
@@ -1042,6 +1048,10 @@ void renderMenu(int menu,int xscr,int yscr){
                 renderFrame(1,1,24,14,0xFFFF1010);
                 renderItemList(player.p.inv, 1,1,24,14, curInvSel);
 		    vita2d_end_drawing();
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
         break;  
         case MENU_CRAFTING:
 		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
@@ -1077,6 +1087,10 @@ void renderMenu(int menu,int xscr,int yscr){
                 }
                 
 		    vita2d_end_drawing();
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
         break;  
         
         case MENU_CONTAINER:
@@ -1098,6 +1112,10 @@ void renderMenu(int menu,int xscr,int yscr){
                 curChestEntity->entityFurniture.r == 1 ? curInvSel : -curChestEntity->entityFurniture.oSel - 1);
 		        offsetX = 0;offsetY = 0;
 		    vita2d_end_drawing();
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
         break;
         case MENU_ABOUT:
 			vita2d_start_drawing();
