@@ -286,7 +286,7 @@ int main() {
 		oldpad = pad;
 	}
 
-	freeRecipes();
+	/*freeRecipes();
 
 	freeLightBakes();
 	vita2d_free_texture(icons);
@@ -297,6 +297,6 @@ int main() {
 	vita2d_free_texture(minimap[4]);
 	freeSounds();
 	//csndExit();
-	vita2d_fini();
+	vita2d_fini();*/
 	return 0;
 }
