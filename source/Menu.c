@@ -869,8 +869,9 @@ void renderMenu(int menu,int xscr,int yscr){
 		vita2d_end_drawing();
         break;
         case MENU_SETTINGS_REBIND:
-		    vita2d_start_drawing();
-		        drawTextColor("Rebind Buttons",116,12,0xFF00AFAF);
+		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+				vita2d_draw_rectangle(0,0,960,544,0xFF000000);
+		        drawTextColor("Rebind Buttons",116,12,0xFF33FFFF);
                 drawText("Button",16,32);
                 drawText("Game",140,32);
                 drawText("Menus",280,32);
@@ -880,7 +881,7 @@ void renderMenu(int menu,int xscr,int yscr){
                     
                 for(i = 0; i < 5; ++i){
                     if((currentSelection-2) + i > 21 || (currentSelection-2) + i < 0) continue;
-                    renderButtonIcon(keys[(currentSelection-2) + i], 16, (i * 18) + 30, 2);
+                    renderButtonIconNorm(keys[(currentSelection-2) + i], 16, (i * 18) + 30, 2);
                     int ccol = 0xFF7F7F7F;
                     
                     sprintf(gameButText,"%s",getButtonFunctionGame(keys[(currentSelection-2) + i]));
@@ -912,7 +913,7 @@ void renderMenu(int menu,int xscr,int yscr){
                         drawTextColor(msg,(400 - (strlen(msg) * 12))/2, (i * 24) + 92, color);    
                     }
                     drawText("Press   to return", 98, 190);
-                    renderButtonIcon(k_decline.input & -k_decline.input, 168, 188, 1);
+                    renderButtonIconNorm(k_decline.input & -k_decline.input, 168, 188, 1);
                     
                     if(errorBut >= 0 && errorBut < 12){
                         char errorText[30];
@@ -934,21 +935,11 @@ void renderMenu(int menu,int xscr,int yscr){
                     }
                     
                 }
-		    if(!selBut){
-                drawText("Press   to select", 58, 80);
-                renderButtonIcon(k_accept.input & -k_accept.input, 128, 78, 1);
-                drawText("Press   to return", 58, 130);
-                renderButtonIcon(k_decline.input & -k_decline.input, 128, 128, 1);
-            } else {
-                drawText("Press   or   to scroll", 28, 50);
-                renderButtonIcon(k_left.input & -k_left.input, 98, 48, 1);
-                renderButtonIcon(k_right.input & -k_right.input, 160, 48, 1);
-                drawText("Press   to unselect", 46, 100);
-                renderButtonIcon(k_accept.input & -k_accept.input, 118, 98, 1);
-                drawText("Press   to return", 58, 150);
-                renderButtonIcon(k_decline.input & -k_decline.input, 128, 148, 1);
-            }
 		    vita2d_end_drawing();
+			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
+			vita2d_end_drawing();
+			vita2d_swap_buffers();
         break;       
         case MENU_PAUSED:
 		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
