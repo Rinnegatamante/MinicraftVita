@@ -161,6 +161,19 @@ int main() {
     
 	sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
 	vita2d_init();
+	
+	// GekiHEN splashscreen
+	vita2d_texture* splash = vita2d_load_PNG_file("app0:/splash.png");
+	int s;
+	for (s=0;s<3;s++){
+		vita2d_start_drawing();
+		vita2d_draw_texture(splash, 0, 0);
+		vita2d_end_drawing();
+		vita2d_swap_buffers();
+	}
+	sceKernelDelayThread(3000000);
+	vita2d_free_texture(splash);
+	
 	noItem = newItem(ITEM_NULL, 0);
 	
 	currentMenu = MENU_TITLE;
