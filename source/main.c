@@ -11,6 +11,10 @@
 #include "MapGen.h"
 #include "Menu.h"
 #include "texturepack.h"
+#include "includes/sharp_bilinear_f.h"
+#include "includes/sharp_bilinear_v.h"
+#include "includes/texture_f.h"
+#include "includes/opaque_v.h"
 
 extern void vita2d_texture_set_pixel(vita2d_texture* t, int w, int h, unsigned int clr);
 extern uint32_t vita2d_texture_get_pixel(vita2d_texture* t, int x, int y);
@@ -149,6 +153,8 @@ void clearScreen(int* data, uint8_t fill, int size) {
 char debugText[34];
 char bossHealthText[34];
 vita2d_texture* fbo = NULL;
+vita2d_shader* sharp = NULL;
+vita2d_shader* bicubic = NULL;
 int main() {
 	FILE * file;
 	shouldRenderDebug = true;
@@ -161,6 +167,9 @@ int main() {
     
 	sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
 	vita2d_init();
+	
+	sharp = vita2d_create_shader((SceGxmProgram*) sharp_bilinear_v, (SceGxmProgram*) sharp_bilinear_f);
+	bicubic = vita2d_create_shader((SceGxmProgram*) opaque_v, (SceGxmProgram*) texture_f);
 	
 	// GekiHEN splashscreen
 	vita2d_texture* splash = vita2d_load_PNG_file("app0:/splash.png");
@@ -266,7 +275,10 @@ int main() {
 			tick();
 			
 			vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
-			
+			vita2d_texture_set_program(bicubic->vertexProgram, bicubic->fragmentProgram);
+			vita2d_texture_set_wvp(bicubic->wvpParam);
+			vita2d_texture_set_vertexInput(&bicubic->vertexInput);
+			vita2d_texture_set_fragmentInput(&bicubic->fragmentInput);
 			offsetX = xscr;
 			offsetY = yscr;
 			vita2d_draw_rectangle(0, 0, 960, 544, 0xFF0C0C0C); //RGBA8(12, 12, 12, 255)); //You might think "real" black would be better, but it actually looks better that way
@@ -287,6 +299,10 @@ int main() {
 			renderGui();
             vita2d_end_drawing();
 			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_texture_set_program(sharp->vertexProgram, sharp->fragmentProgram);
+			vita2d_texture_set_wvp(sharp->wvpParam);
+			vita2d_texture_set_vertexInput(&sharp->vertexInput);
+			vita2d_texture_set_fragmentInput(&sharp->fragmentInput);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			
