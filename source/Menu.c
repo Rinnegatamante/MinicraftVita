@@ -869,7 +869,8 @@ void renderMenu(int menu,int xscr,int yscr){
 		vita2d_end_drawing();
         break;
         case MENU_SETTINGS_REBIND:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
 				vita2d_draw_rectangle(0,0,960,544,0xFF000000);
 		        drawTextColor("Rebind Buttons",116,12,0xFF33FFFF);
                 drawText("Button",16,32);
@@ -936,13 +937,14 @@ void renderMenu(int menu,int xscr,int yscr){
                     
                 }
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();
         break;       
         case MENU_PAUSED:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -973,13 +975,14 @@ void renderMenu(int menu,int xscr,int yscr){
                 }
                 
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();
         break;  
         case MENU_WIN:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -998,13 +1001,14 @@ void renderMenu(int menu,int xscr,int yscr){
                 
                 //printf("0x%08X",k_attack.input & -k_attack.input);
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();
 	        break;  
         case MENU_LOSE:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1022,13 +1026,14 @@ void renderMenu(int menu,int xscr,int yscr){
                 renderButtonIconNorm(k_attack.input & -k_attack.input, 166, 148, 1);
                 //printf("0x%08X",k_attack.input & -k_attack.input);
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();
         break;  
         case MENU_INVENTORY:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1039,13 +1044,14 @@ void renderMenu(int menu,int xscr,int yscr){
                 renderFrame(1,1,24,14,0xFFFF1010);
                 renderItemList(player.p.inv, 1,1,24,14, curInvSel);
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();
         break;  
         case MENU_CRAFTING:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1078,14 +1084,15 @@ void renderMenu(int menu,int xscr,int yscr){
                 }
                 
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();
         break;  
         
         case MENU_CONTAINER:
-		    vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+		    vita2d_pool_reset();
+		    vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
                 if(currentLevel == 0){ 
                     vita2d_draw_texture_part_scale(minimap[1],(-xscr/3)-256,(-yscr/3)-32,0,0,128,128,12.5,7.5);
                     vita2d_draw_rectangle(0,0,400,240, 0xAFDFDFDF);
@@ -1103,7 +1110,7 @@ void renderMenu(int menu,int xscr,int yscr){
                 curChestEntity->entityFurniture.r == 1 ? curInvSel : -curChestEntity->entityFurniture.oSel - 1);
 		        offsetX = 0;offsetY = 0;
 		    vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			vita2d_swap_buffers();

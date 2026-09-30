@@ -249,7 +249,7 @@ int main() {
 	tickCount = 0;
 	initRecipes();
 	defineTables();
-	fbo = vita2d_create_empty_texture(960,544);
+	fbo = vita2d_create_empty_texture_rendertarget(960, 544, SCE_GXM_TEXTURE_FORMAT_A8B8G8R8);
 	
 	SceCtrlData pad, oldpad;
 	for (;;) {
@@ -265,7 +265,8 @@ int main() {
 		if (currentMenu == 0) {
 			tick();
 			
-			vita2d_start_drawing_advanced(fbo, VITA_2D_RESET_POOL | VITA_2D_SCENE_FRAGMENT_SET_DEPENDENCY);
+			vita2d_pool_reset();
+			vita2d_start_drawing_advanced(fbo, SCE_GXM_SCENE_FRAGMENT_SET_DEPENDENCY);
 			
 			offsetX = xscr;
 			offsetY = yscr;
@@ -286,7 +287,7 @@ int main() {
             }
 			renderGui();
             vita2d_end_drawing();
-			vita2d_start_drawing_advanced(NULL, VITA_2D_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
+			vita2d_start_drawing_advanced(NULL, SCE_GXM_SCENE_VERTEX_WAIT_FOR_DEPENDENCY);
 			vita2d_draw_texture_scale(fbo,0,0,2.4,2.2667);
 			vita2d_end_drawing();
 			

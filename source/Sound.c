@@ -1,4 +1,5 @@
 #include "Sound.h"
+#include <string.h>
 #define AUDIO_CHANNELS 8
 #define AUDIO_BUFSIZE 8192 // Max dimension of BGM/SFX buffer size
 
